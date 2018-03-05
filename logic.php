@@ -153,7 +153,13 @@
 		function q10()
 		{
 			$answer = array_count_values($this->answer);
+			$ans = sort($answer);
+			$answer = array_pad($answer, 4, 0);
+			// var_dump(max($answer),min($answer));exit;
+			// $answer = array_merge($answer);
 			$diff = max($answer)-min($answer);
+			// @$diff = $answer[3]-$answer[0];
+
 			if ($this->answer[9]==1&&$diff==3) {
 				return true;
 			} else if ($this->answer[9]==2&&$diff==2) {
