@@ -153,9 +153,7 @@
 		function q10()
 		{
 			$answer = array_count_values($this->answer);
-			$ans = sort($answer);
-			$answer = array_merge($answer);
-			@$diff = $answer[3]-$answer[0];
+			$diff = max($answer)-min($answer);
 			if ($this->answer[9]==1&&$diff==3) {
 				return true;
 			} else if ($this->answer[9]==2&&$diff==2) {
