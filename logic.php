@@ -7,10 +7,10 @@
 		private $answer = [];
 
 
-		function q1 ()
-		{
-			return $this->answer[0];
-		}
+		// function q1 ()
+		// {
+		// 	return $this->answer[0];
+		// }
 
 		function q2()
 		{
@@ -121,6 +121,7 @@
 			}
 		}
 
+		//附加不相邻条件
 		function q81($n)
 		{
 			if ($this->answer[0]==1&&$this->answer[$n]!=2) {
@@ -154,7 +155,7 @@
 			$answer = array_count_values($this->answer);
 			$ans = sort($answer);
 			$answer = array_merge($answer);
-			$diff = $answer[3]-$answer[0];
+			@$diff = $answer[3]-$answer[0];
 			if ($this->answer[9]==1&&$diff==3) {
 				return true;
 			} else if ($this->answer[9]==2&&$diff==2) {
@@ -170,50 +171,64 @@
 
 		function run()
 		{
-			for ($i=1111111111; $i <=4444444444; $i++) { 
-				echo $i;
-				$str = (string)$i;  // 将int型转换成string
-
-				$this->answer = str_split($str);
-				if (in_array(['0','5','6','7','8','9'], $this->answer)) {
-					continue;
-				}
-				if (!$this->q1()) {
-					echo 1;
-					continue;
-				} else if (!$this->q2()) {
-					echo 2;
+			for ($i=0; $i <pow(4, 10); $i++) { 
+				$answer = $this->ten2four($i);
+				//将0-3转换成1-4的形式
+				$answer = array_map('plus1', $answer);
+				$this->answer = $answer;
+				if (!$this->q2()) {
 					continue;
 				} else if (!$this->q3()) {
-					echo 3;
 					continue;
 				} else if (!$this->q4()) {
-					echo 4;
 					continue;
 				} else if (!$this->q5()) {
-					echo 5;
 					continue;
 				} else if (!$this->q6()) {
-					echo 6;
 					continue;
 				} else if (!$this->q7()) {
-					echo 7;
 					continue;
 				} else if (!$this->q8()) {
-					echo 8;
 					continue;
 				} else if (!$this->q9()) {
 					continue;
 				} else if (!$this->q10()) {
 					continue;
 				} else {
-					var_dump($this->answer);
+					//答案格式化
+					$a = array_map('answerFormat', $this->answer);
+					var_dump($a);
 					exit();
 				}
 			}
 		}
+
+		function ten2four($v)
+		{
+			$answer = [];
+			$val = $v;
+			do {
+				$answer[] = $val%4;
+				$val = (int)floor($val/4);
+			} while ($val!=0);
+			//补齐数组
+			$a = array_pad($answer, 10, 0);
+			//反转数组返回
+			return array_reverse($a);
+		}
+
+		
 	}
 
+	function answerFormat($answer)
+	{
+		return chr((int)$answer+64);
+	}
+
+	function plus1($answer)
+	{
+		return $answer+1;
+	}
 	$logic = new Logic();
 
 	$logic->run();
